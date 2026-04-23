@@ -1,0 +1,45 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.front{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.Register{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.error1 {
+  position: absolute;
+  color: red;
+  font-size: 14px;
+  top: 45%;   
+  left: 75%;     
+  transform: translateY(-50%); 
+}
+.error2 {
+  position: absolute;
+  color: red;
+  font-size: 14px;
+  top: 50.5%;   
+  left: 75%;     
+  transform: translateY(-50%); 
+}
+.error3 {
+  position: absolute;
+  color: red;
+  font-size: 14px;
+  top: 56%;   
+  left: 75%;     
+  transform: translateY(-50%); 
+}
