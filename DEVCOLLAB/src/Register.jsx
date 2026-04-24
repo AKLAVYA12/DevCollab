@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 const api = axios.create({
     baseURL : "http://localhost:3000/",
 });
 
 function Register() {
+    
+    const navigate = useNavigate();
     const [name,nameState] = useState("");
     const [email,emailState] = useState("");
     const [pass1,pass1State] = useState("");
@@ -30,16 +33,21 @@ useEffect(() => {
 const submitData = async () =>{
         try {
             loadingState(true);
-            const storeData = await api.post("/register",{name,email,pass1});
-            console.log(storeData.data)
+            const storeData = await api.post("/auth/register",{name,email,pass1});
         } catch (err) {
-            errorState(err.message);
+            errorState(err.response.data);
         } finally{
             loadingState(false);
         }
 }
 
-    return(
+const getback = () =>{
+    navigate("/");
+}
+
+const isempty =  !name || !email || !pass1 || !pass2;
+
+return(
         <>
             <div>
                 <h1>Register here...</h1>
@@ -54,7 +62,9 @@ const submitData = async () =>{
                     value={pass1} onChange={e => pass1State(e.target.value)}/><p className="error3">{errorpass}</p>
                     <input type="password" placeholder="Enter password again" 
                     value={pass2} onChange={e => pass2State(e.target.value)}/>
-                    <button onClick={submitData}>Submit</button>
+                    <button onClick={submitData} 
+                    disabled={isempty} >Submit</button>
+                    <button onClick={getback}>Login</button>
                 </div>
             </div>
         </>
