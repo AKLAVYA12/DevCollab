@@ -19,6 +19,18 @@ body {
   width: 250px;
 }
 
+.createproject{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 250px;
+}
+
+.error-f {
+  color: red;
+  font-size: 14px;
+  transform: translateY(-50%); 
+}
 
 .error1 {
   position: absolute;

@@ -1,17 +1,15 @@
-import express, { json } from 'express';
+import express from 'express';
 import bcrypt from 'bcrypt';
 import db from "../db.js";
 import jwt from 'jsonwebtoken';
 
 const router_checkuser = express.Router();
 
-const id = Date.now().toString();
-
 router_checkuser.post("/checkuser", (req,res)=>{
     const {email,password} = req.body;
-    if(!email || !password){return res.status(500).json({message : "parameter misding"})};
+    if(!email || !password || !email.includes("@gmail.com")){return res.status(500).json({message : "parameter misding"})};
     
-    const querry = "SELECT email , password from register_user WHERE email = ?";
+    const querry = "SELECT id , email , name, password from register_user WHERE email = ?";
     db.query(querry,[email],async (err,result)=>{
         if(err){
             console.error(err);
@@ -27,7 +25,8 @@ router_checkuser.post("/checkuser", (req,res)=>{
             return res.status(500).json({message : "password do not match"});
         }
         const token = jwt.sign(
-        {userId : id},
+        {userId : result[0].id,
+        name : result[0].name},
         process.env.JWT_KEY,
         {expiresIn : "1h"}
         );
@@ -35,9 +34,9 @@ router_checkuser.post("/checkuser", (req,res)=>{
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
-            maxAge: 60 * 60 * 1000,
+            maxAge: 10 * 50 * 1000
         });
-        return res.json({message : "login success"});
+        return res.json({message : "login success" , name : result[0].name , token : token, id : result[0].id});
     });
 });
 
