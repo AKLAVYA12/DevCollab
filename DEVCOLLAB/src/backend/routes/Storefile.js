@@ -15,8 +15,8 @@ router_fileuplode.post("/",uplode.single("pdf"),(req,res)=>{
         const name = decode.name;
         const fileData = req.file.buffer;
         const projectName = req.body.projectName;
-        const querry = "INSERT INTO project(id,files,name,created_by) VALUES(?,?,?,?)";
-        db.query(querry,[id,fileData,projectName,name],(err,result)=>{
+        const querry = "INSERT INTO project(files,name,created_by,user_id) VALUES(?,?,?,?)";
+        db.query(querry,[fileData,projectName,name,id],(err,result)=>{
             if(err){
                 console.log(err);
                 return res.status(402).json({message : err});

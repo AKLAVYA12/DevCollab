@@ -17,7 +17,7 @@ router_checkuser.post("/checkuser", (req,res)=>{
         }
 
         if(!result || result.length === 0){
-            return res.status(500).json({message : "pass or mail empty"});
+            return res.status(500).json({message : "pass and mail is wrong or empty"});
         }
 
         const check_hash = await bcrypt.compare(password,result[0].password);
